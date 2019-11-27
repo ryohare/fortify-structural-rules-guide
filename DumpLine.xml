@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RulePack xmlns="xmlns://www.fortifysoftware.com/schema/rules"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RulePack">
+    <RulePackID>4AEF134A-4C99-4431-A897-6F6663203903</RulePackID>
+    <SKU>SKU-4AEF134A-4C99-4431-A897-6F6663203903</SKU>
+    <Name><![CDATA[DumpLine.xml]]></Name>
+    <Version>1.0</Version>
+    <Description><![CDATA[Description for DumpLine.xml]]></Description>
+    <Rules version="19.10">
+        <RuleDefinitions>
+            <StructuralRule formatVersion="19.10" language="cpp">
+                <RuleID>224166A0-3461-4661-969E-918ED309AE34</RuleID>
+                <VulnKingdom>STRUCT_DUMP</VulnKingdom>
+                <VulnCategory>STRUCT_DUMP</VulnCategory>
+                <VulnSubcategory>STRUCT_DUMP</VulnSubcategory>
+                <DefaultSeverity>5.0</DefaultSeverity>
+                <Description></Description>
+                <Predicate><![CDATA[
+        				Expression e: e.sourceLocation.startLine == LINE_NUMBER
+                ]]></Predicate>
+            </StructuralRule>
+        </RuleDefinitions>
+    </Rules>
+</RulePack>
