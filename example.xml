@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RulePack xmlns="xmlns://www.fortifysoftware.com/schema/rules"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RulePack">
+    <RulePackID>4AEF134A-4C99-4431-A897-6F6663203903</RulePackID>
+    <SKU>SKU-4AEF134A-4C99-4431-A897-6F6663203903</SKU>
+    <Name><![CDATA[DumpLine.xml]]></Name>
+    <Version>1.0</Version>
+    <Description><![CDATA[Description for DumpLine.xml]]></Description>
+    <Rules version="19.10">
+        <RuleDefinitions>
+            <!--<StructuralRule formatVersion="19.10" language="cpp">
+                <RuleID>224166A0-3461-4661-969E-918ED309AE34</RuleID>
+                <VulnKingdom>PRIVATE</VulnKingdom>
+                <VulnCategory>PRIVATE</VulnCategory>
+                <VulnSubcategory>PRIVATE</VulnSubcategory>
+                <DefaultSeverity>5.0</DefaultSeverity>
+                <Description></Description>
+                <Predicate><![CDATA[
+                     FunctionCall fc:
+                        fc.name == "SendResponse"
+                        and fc.arguments[0] is [Expression e:]
+                ]]></Predicate>
+            </StructuralRule>-->
+            <CharacterizationRule formatVersion="19.10" language="cpp">
+                <RuleID>553277B8-EE5D-4B1D-A798-2F3764744DDF4E74</RuleID>
+                <VulnKingdom>Input Validation and Representation</VulnKingdom>
+                <VulnCategory>Privacy Violation</VulnCategory>
+                <DefaultSeverity>4.0</DefaultSeverity>
+                <Description ref="desc.dataflow.cpp.privacy_violation"/>
+                <StructuralMatch><![CDATA[
+                    FunctionCall fc:
+                        fc.name == "SendResponse"
+                        and fc.arguments[0] is [Expression e:]
+                ]]></StructuralMatch>
+                <Definition><![CDATA[
+                    TaintSink(e, [PRIVATE])
+            ]]></Definition>
+            </CharacterizationRule>
+            <CharacterizationRule formatVersion="19.10" language="cpp">
+                <RuleID>553277B8-5D-4B1D-A798-2F374DDF4E74</RuleID>
+                <StructuralMatch><![CDATA[
+                    FieldAccess fa:
+                        fa.name == "data"
+                        and fa.instance is [VariableAccess va:
+                            va.type.name == "Response"
+                        ]
+                ]]></StructuralMatch>
+                <Definition><![CDATA[
+                    TaintTransfer(fa, va)
+            ]]></Definition>
+            </CharacterizationRule>
+            <CharacterizationRule formatVersion="19.10" language="cpp">
+                <RuleID>EE5D-4B1D-A798-4D1B5E080A32</RuleID>
+                <StructuralMatch><![CDATA[
+                    FunctionCall fc:
+                        fc.name contains "GetPrivateData" 
+                ]]></StructuralMatch>
+                <Definition><![CDATA[
+                    TaintSource(fc, {+PRIVATE})
+            ]]></Definition>
+            </CharacterizationRule>
+        </RuleDefinitions>
+    </Rules>
+</RulePack>
